@@ -1,7 +1,12 @@
-@import '../variables.scss';
+@import "../variables.scss";
 @import "../libs/normalize.scss";
 
 .categories {
+  @media (max-width: 1000px) {
+    width: 100%;
+    overflow-x: auto;
+  }
+
   ul {
     display: flex;
 

@@ -1,0 +1,41 @@
+.root {
+  position: relative;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input {
+  font-size: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 12px 20px;
+  padding-left: 40px;
+  width: 450px;
+  border-radius: 12px;
+  -webkit-appearance: none;
+  appearance: none;
+} 
+
+.icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  translate: 0 -50%;
+  width: 20px;
+  aspect-ratio: 1;
+  opacity: 0.3;
+  pointer-events: none;
+
+  &Close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    translate: 0 -50%;
+    width: 20px;
+    aspect-ratio: 1;
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}

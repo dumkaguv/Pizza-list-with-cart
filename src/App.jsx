@@ -1,23 +1,26 @@
 import "../src/assets/scss/app.scss";
-import Header from "./components/Header";
-import Categories from "./components/Categories";
-import Sort from "./components/Sort";
-import PizzaList from "./components/PizzaList";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import NotFound from "./pages/NotFound";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 function App() {
+  const [searchValue, setSearchValue] = useState("");
+
   return (
-    <div className="wrapper">
-      <Header />
-      <main className="content">
-        <div className="container">
-          <div className="content__top">
-            <Categories />
-            <Sort />
-          </div>
-          <PizzaList />
-        </div>
-      </main>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home searchValue={searchValue} setSearchValue={setSearchValue} />
+          }
+        />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }
 

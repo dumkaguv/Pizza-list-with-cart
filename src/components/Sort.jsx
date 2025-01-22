@@ -1,7 +1,43 @@
-function Sort() {
+import { useState, useEffect } from "react";
+
+function Sort({ activeSortIndex, setActiveSortIndex }) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const sortOptions = [
+    "Популярности ↓",
+    "Популярности ↑",
+    "Цене ↓",
+    "Цене ↑",
+    "Алфавиту ↓",
+    "Алфавиту ↑",
+  ];
+
+  function onClickOutside(event) {
+    const isClickOutside = !event.target.closest(".sort");
+
+    if (isClickOutside) {
+      setIsPopupOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("click", onClickOutside);
+
+    return () => {
+      window.removeEventListener("click", onClickOutside);
+    };
+  }, []);
+
   return (
     <div className="sort">
-      <div className="sort__label">
+      <div
+        className="sort__label"
+        onClick={() => setIsPopupOpen(!isPopupOpen)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            setIsPopupOpen(!isPopupOpen);
+          }
+        }}
+      >
         <svg
           width="10"
           height="6"
@@ -15,15 +51,33 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span tabIndex="0">популярности</span>
+        <span tabIndex="0">{sortOptions[activeSortIndex]}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {isPopupOpen && (
+        <div className="sort__popup">
+          <ul>
+            {sortOptions.map((item, index) => (
+              <li
+                onClick={() => {
+                  setActiveSortIndex(index);
+                  setIsPopupOpen(false);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    setActiveSortIndex(index);
+                    setIsPopupOpen(false);
+                  }
+                }}
+                className={index === activeSortIndex ? "active" : ""}
+                key={index}
+                tabIndex={0}
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

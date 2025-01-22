@@ -20,6 +20,11 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+
+  @media (max-width: 645px) {
+    width: calc(100vw - 30px);
+    margin: 30px auto;
+  }
 }
 
 .content {
@@ -30,15 +35,34 @@ body {
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    align-items: center;
+
+    @media (max-width: 1500px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 800px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 1400px) {
+      flex-direction: column-reverse;
+      row-gap: 35px;
+    }
   }
 }
 
