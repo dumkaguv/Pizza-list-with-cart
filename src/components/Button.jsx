@@ -1,6 +1,6 @@
 function Button({ children, classes }) {
   return (
-    <button className={[...classes].join(" ")} type="button">
+    <button tabIndex={0} className={[...classes].join(" ")} type="button">
       {children}
     </button>
   );

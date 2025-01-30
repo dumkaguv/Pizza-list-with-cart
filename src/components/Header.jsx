@@ -4,11 +4,11 @@ import logo from "/img/pizza-logo.svg";
 import Cart from "./Cart";
 import Search from "./Search";
 
-function Header() {
+function Header({ isShowSearch = false }) {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to="/" tabIndex={0}>
           <div className="header__logo">
             <img width="38" src={logo} alt="Pizza logo" />
             <div>
@@ -17,7 +17,7 @@ function Header() {
             </div>
           </div>
         </Link>
-        <Search />
+        {isShowSearch && <Search />}
         <Cart />
       </div>
     </div>

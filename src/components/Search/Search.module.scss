@@ -16,6 +16,10 @@ input[type="search"]::-webkit-search-cancel-button {
   border-radius: 12px;
   -webkit-appearance: none;
   appearance: none;
+
+  @media (max-width: 1170px) {
+    width: 250px;
+  }
 } 
 
 .icon {

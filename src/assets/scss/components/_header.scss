@@ -1,17 +1,22 @@
-@import '../variables.scss';
+@import "../variables.scss";
 
 .header {
   border-bottom: 1px solid $gray-line;
   padding: 40px 0;
 
+  @media (max-width: 900px) {
+    padding-block: 25px;
+  }
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    column-gap: 20px;
 
-    @media (max-width: 585px) {
-      row-gap: 20px;
+    @media (max-width: 900px) {
       flex-direction: column;
+      row-gap: 20px;
     }
   }
 
@@ -28,10 +33,18 @@
       letter-spacing: 1%;
       text-transform: uppercase;
       font-weight: 800;
+
+      @media (max-width: 960px) {
+        font-size: 18px;
+      }
     }
 
     p {
       color: #7b7b7b;
+
+      @media (max-width: 960px) {
+        font-size: 14px;
+      }
     }
   }
 }

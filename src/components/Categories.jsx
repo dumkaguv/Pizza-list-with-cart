@@ -15,7 +15,7 @@ function Categories() {
             onClick={() => dispatch(setCategoryId(index))}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
-                onCategoryClick(index);
+                dispatch(setCategoryId(index));
               }
             }}
             className={categoryId === index ? "active" : ""}

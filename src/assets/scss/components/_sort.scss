@@ -39,6 +39,11 @@
         padding: 12px 20px;
         cursor: pointer;
 
+        @media (max-width: 960px) {
+          padding: 10px 15px;
+          font-size: 14px;
+        }
+
         &.active,
         &:hover {
           background: rgba(254, 95, 30, 0.05);
