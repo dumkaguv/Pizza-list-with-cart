@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
 
-import { SearchContext } from "@/App";
 import logo from "/img/pizza-logo.svg";
 import Cart from "./Cart";
 import Search from "./Search";
 
 function Header() {
-  const { searchValue, setSearchValue } = useContext(SearchContext);
-
   return (
     <div className="header">
       <div className="container">
@@ -21,7 +17,7 @@ function Header() {
             </div>
           </div>
         </Link>
-        <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+        <Search />
         <Cart />
       </div>
     </div>

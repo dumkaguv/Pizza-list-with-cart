@@ -1,9 +1,16 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { SearchContext } from "@/App";
 import { setTotalPages, setCurrentPage } from "@/redux/slices/paginationSlice";
+import {
+  getConcatedQueryParams,
+  getParamsFromUrl,
+  saveSearchParamsRedux,
+} from "@/helpers/UrlSearchParams";
+import sortOptionsMap from "@/constants/getSortOptionsMap";
+
 import PizzaBlock from "./PizzaBlock";
 import Skeleton from "./PizzaBlock/Skeleton";
 import Pagination from "@/components/Pagination";
@@ -11,46 +18,47 @@ import Pagination from "@/components/Pagination";
 function PizzaList() {
   const [dataPizza, setDataPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { searchValue } = useContext(SearchContext);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { searchValue } = useSelector((state) => state.search);
 
   const { categoryId: activeCategoryType, sortId: activeSortIndex } = useSelector(
     (state) => state.filter
   );
-  const { totalPages, currentPage, itemsPerPage } = useSelector(
-    (state) => state.pagination
-  );
 
-  const sortOptionsMap = {
-    0: "rating&order=desc",
-    1: "rating&order=asc",
-    2: "prices&order=desc",
-    3: "prices&order=asc",
-    4: "title&order=desc",
-    5: "title&order=asc",
+  const { totalPages, currentPage } = useSelector((state) => state.pagination);
+
+  const baseUrl = `http://localhost:3000/api/pizzas`;
+  const urlParams = {
+    categoryId: activeCategoryType,
+    sortId: sortOptionsMap[activeSortIndex],
+    currentPage,
+    searchValue,
   };
 
-  const getActiveCategoryType = () => {
-    return activeCategoryType === 0 ? "" : `category=${activeCategoryType}`;
-  };
+  const parsedUrlParams = getConcatedQueryParams(urlParams);
+  let url = `${baseUrl}${parsedUrlParams}`;
+  let isReload = false;
 
-  const getActiveSortType = () => {
-    return `&sortBy=${sortOptionsMap[activeSortIndex]}`;
-  };
+  useEffect(() => {
+    const changeUrlOnReloadWithUrlParams = () => {
+      const searchParams = getParamsFromUrl();
+      url = `${baseUrl}${searchParams}`;
+      saveSearchParamsRedux(searchParams.slice(1));
+      isReload = true;
+    };
 
-  const handlePageChange = (newPage) => {
-    dispatch(setCurrentPage(newPage));
-  };
+    changeUrlOnReloadWithUrlParams();
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (isReload) {
+          return;
+        }
         setIsLoading(true);
-
-        const url = `http://localhost:3000/api/pizzas?${getActiveCategoryType()}
-        // ${getActiveSortType()}&page=${currentPage}&limit=${itemsPerPage}
-        // &search=${searchValue}`;
         const response = await axios.get(url);
 
         if (response.status === 200) {
@@ -58,6 +66,7 @@ function PizzaList() {
 
           setDataPizza(data.data);
           dispatch(setTotalPages(data.totalPages));
+          navigate(parsedUrlParams, { replace: true });
         }
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
@@ -73,7 +82,7 @@ function PizzaList() {
     };
 
     fetchData();
-  }, [activeCategoryType, activeSortIndex, searchValue, currentPage, totalPages]);
+  }, [activeCategoryType, activeSortIndex, searchValue, currentPage]);
 
   return (
     <>
@@ -88,7 +97,7 @@ function PizzaList() {
       <Pagination
         currentPage={currentPage}
         pageCount={totalPages}
-        onPageChange={handlePageChange}
+        onPageChange={(newPage) => dispatch(setCurrentPage(newPage))}
       />
     </>
   );

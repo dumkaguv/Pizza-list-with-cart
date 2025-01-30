@@ -2,20 +2,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
 import { setSortId } from "@/redux/slices/filterSlice";
+import { sortOptions } from "@/constants/getSortOptionsMap";
 
 function Sort() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const dispatch = useDispatch();
   const sortOptionIndex = useSelector((state) => state.filter.sortId);
-
-  const sortOptions = [
-    "Популярности ↓",
-    "Популярности ↑",
-    "Цене ↓",
-    "Цене ↑",
-    "Алфавиту ↓",
-    "Алфавиту ↑",
-  ];
 
   function onClickOutside(event) {
     const isClickOutside = !event.target.closest(".sort");

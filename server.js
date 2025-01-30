@@ -21,15 +21,15 @@ app.get("/api/pizzas", async (req, res) => {
     let data = await readData();
 
     // ======== Фильтрация ========
-    const { category, search, sortBy, order, page = 1, limit = 8 } = req.query;
+    const { categoryId, searchValue, sortId, order, currentPage = 1, limit = 8 } = req.query;
 
-    if (category) {
-      data = data.filter((item) => item.category === parseInt(category));
+    if (categoryId) {
+      data = data.filter((item) => item.category === parseInt(categoryId));
     }
 
     // ======== Поиск ========
-    if (search) {
-      const searchLower = search.toLowerCase();
+    if (searchValue) {
+      const searchLower = searchValue.toLowerCase();
       data = data.filter(
         (item) =>
           item.title.toLowerCase().includes(searchLower)
@@ -37,24 +37,24 @@ app.get("/api/pizzas", async (req, res) => {
     }
 
     // ======== Сортировка ========
-    if (sortBy) {
+    if (sortId) {
       data.sort((a, b) => {
-        if (sortBy === "prices") {
+        if (sortId === "prices") {
           const priceA = parseInt(Object.values(a.prices)[0].replace(/\D/g, ""));
           const priceB = parseInt(Object.values(b.prices)[0].replace(/\D/g, ""));
 
           return (priceA - priceB) * (order === "desc" ? -1 : 1);
         }
 
-        if (a[sortBy] < b[sortBy]) return order === "desc" ? 1 : -1;
-        if (a[sortBy] > b[sortBy]) return order === "desc" ? -1 : 1;
+        if (a[sortId] < b[sortId]) return order === "desc" ? 1 : -1;
+        if (a[sortId] > b[sortId]) return order === "desc" ? -1 : 1;
         return 0;
       });
     }
 
     // ======== Пагинация ========
     const totalItems = data.length;
-    const pageNumber = parseInt(page);
+    const pageNumber = parseInt(currentPage);
     const itemsPerPage = parseInt(limit);
     const startIndex = (pageNumber - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
