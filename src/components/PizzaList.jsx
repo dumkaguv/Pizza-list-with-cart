@@ -1,14 +1,26 @@
-import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+
+import { SearchContext } from "@/App";
+import { setTotalPages, setCurrentPage } from "@/redux/slices/paginationSlice";
 import PizzaBlock from "./PizzaBlock";
 import Skeleton from "./PizzaBlock/Skeleton";
-import Pagination from "../components/Pagination";
+import Pagination from "@/components/Pagination";
 
-function PizzaList({ activeCategoryType, activeSortIndex, searchValue }) {
+function PizzaList() {
   const [dataPizza, setDataPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 8;
+
+  const { searchValue } = useContext(SearchContext);
+  const dispatch = useDispatch();
+
+  const { categoryId: activeCategoryType, sortId: activeSortIndex } = useSelector(
+    (state) => state.filter
+  );
+  const { totalPages, currentPage, itemsPerPage } = useSelector(
+    (state) => state.pagination
+  );
 
   const sortOptionsMap = {
     0: "rating&order=desc",
@@ -28,7 +40,7 @@ function PizzaList({ activeCategoryType, activeSortIndex, searchValue }) {
   };
 
   const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
+    dispatch(setCurrentPage(newPage));
   };
 
   useEffect(() => {
@@ -39,13 +51,13 @@ function PizzaList({ activeCategoryType, activeSortIndex, searchValue }) {
         const url = `http://localhost:3000/api/pizzas?${getActiveCategoryType()}
         // ${getActiveSortType()}&page=${currentPage}&limit=${itemsPerPage}
         // &search=${searchValue}`;
-        const response = await fetch(url);
-        console.log(url)
-        if (response.ok) {
-          const data = await response.json();
+        const response = await axios.get(url);
+
+        if (response.status === 200) {
+          const data = response.data;
 
           setDataPizza(data.data);
-          setTotalPages(data.totalPages);
+          dispatch(setTotalPages(data.totalPages));
         }
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
@@ -53,11 +65,15 @@ function PizzaList({ activeCategoryType, activeSortIndex, searchValue }) {
         setIsLoading(false);
       }
 
-      window.scrollTo(0, 0)
+      if (activeCategoryType) {
+        dispatch(setCurrentPage(1));
+      }
+
+      window.scrollTo(0, 0);
     };
 
     fetchData();
-  }, [activeCategoryType, activeSortIndex, searchValue, currentPage]);
+  }, [activeCategoryType, activeSortIndex, searchValue, currentPage, totalPages]);
 
   return (
     <>
@@ -70,6 +86,7 @@ function PizzaList({ activeCategoryType, activeSortIndex, searchValue }) {
             ))}
       </div>
       <Pagination
+        currentPage={currentPage}
         pageCount={totalPages}
         onPageChange={handlePageChange}
       />

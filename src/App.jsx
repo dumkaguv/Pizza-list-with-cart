@@ -1,26 +1,36 @@
-import "../src/assets/scss/app.scss";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, createContext } from "react";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
+
+import "@/assets/scss/app.scss";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+
+export const SearchContext = createContext("");
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home searchValue={searchValue} setSearchValue={setSearchValue} />
-          }
-        />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+                <Home />
+              </SearchContext.Provider>
+            }
+          />
+
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </Provider>
   );
 }
 

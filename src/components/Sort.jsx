@@ -1,7 +1,13 @@
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
-function Sort({ activeSortIndex, setActiveSortIndex }) {
+import { setSortId } from "@/redux/slices/filterSlice";
+
+function Sort() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const dispatch = useDispatch();
+  const sortOptionIndex = useSelector((state) => state.filter.sortId);
+
   const sortOptions = [
     "Популярности ↓",
     "Популярности ↑",
@@ -51,7 +57,7 @@ function Sort({ activeSortIndex, setActiveSortIndex }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span tabIndex="0">{sortOptions[activeSortIndex]}</span>
+        <span tabIndex="0">{sortOptions[sortOptionIndex]}</span>
       </div>
       {isPopupOpen && (
         <div className="sort__popup">
@@ -59,16 +65,16 @@ function Sort({ activeSortIndex, setActiveSortIndex }) {
             {sortOptions.map((item, index) => (
               <li
                 onClick={() => {
-                  setActiveSortIndex(index);
+                  dispatch(setSortId(index));
                   setIsPopupOpen(false);
                 }}
                 onKeyDown={(event) => {
                   if (event.key === "Enter") {
-                    setActiveSortIndex(index);
+                    dispatch(setSortId(index));
                     setIsPopupOpen(false);
                   }
                 }}
-                className={index === activeSortIndex ? "active" : ""}
+                className={index === sortOptionIndex ? "active" : ""}
                 key={index}
                 tabIndex={0}
               >
