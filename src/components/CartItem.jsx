@@ -1,7 +1,18 @@
-import { removeItem } from "@/redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
 
-function CartItem({ title, imageUrl, type, size, price, quantity }) {
-  function onButtonDeleteClick() {}
+import { removeItem, handleItemQuantity } from "@/redux/slices/cartSlice";
+
+function CartItem(props) {
+  const dispatch = useDispatch();
+  const { id, title, imageUrl, type, size, price, quantity } = props;
+
+  function onButtonDeleteClick() {
+    dispatch(removeItem(props));
+  }
+
+  function onButtonChangeQuantityClick(quantityChange = 1) {
+    dispatch(handleItemQuantity({ item: props, quantityChange }));
+  }
 
   return (
     <li className="cart__item">
@@ -15,7 +26,11 @@ function CartItem({ title, imageUrl, type, size, price, quantity }) {
         </p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <button
+          onClick={() => onButtonChangeQuantityClick(-1)}
+          className="button button--outline button--circle cart__item-count-minus"
+          type="button"
+        >
           <svg
             width="10"
             height="10"
@@ -32,9 +47,13 @@ function CartItem({ title, imageUrl, type, size, price, quantity }) {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{quantity}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
+        <button
+          onClick={() => onButtonChangeQuantityClick(1)}
+          className="button button--outline button--circle cart__item-count-plus"
+          type="button"
+        >
           <svg
             width="10"
             height="10"
@@ -51,7 +70,7 @@ function CartItem({ title, imageUrl, type, size, price, quantity }) {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{quantity * price} ₽</b>

@@ -7,7 +7,7 @@ import { addItem } from "@/redux/slices/cartSlice";
 function PizzaBlock({ id, title, prices, imageUrl, sizes, types }) {
   const [activeType, setActiveType] = useState(0);
   const [activePizzaSize, setActivePizzaSize] = useState(0);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(Object.values(prices)[0]);
   const dispatch = useDispatch();
 
   const pricesValues = Object.values(prices);
@@ -20,7 +20,7 @@ function PizzaBlock({ id, title, prices, imageUrl, sizes, types }) {
       imageUrl,
       type: typeName[activeType],
       size: sizes[activePizzaSize],
-      price: parseInt(pricesValues[price]),
+      price: parseInt(price),
     };
 
     dispatch(addItem(item));
@@ -76,7 +76,7 @@ function PizzaBlock({ id, title, prices, imageUrl, sizes, types }) {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">{price || pricesValues[0]}</div>
+        <div className="pizza-block__price">{price}</div>
         <Button
           onClick={onButtonAddClick}
           classes={["button button--outline button--add"]}

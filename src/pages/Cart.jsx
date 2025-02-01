@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import CartItem from "@/components/CartItem";
 import Header from "@/components/Header";
+import { clearCart } from "@/redux/slices/cartSlice";
 
 function Cart() {
   const { items, totalPrice, totalQuantity } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  function onClearCartButtonClick() {
+    dispatch(clearCart());
+  }
 
   return (
     <div className="wrapper">
@@ -46,7 +52,14 @@ function Cart() {
                 </svg>
                 Корзина
               </h2>
-              <div className="cart__clear">
+              <div
+                tabIndex={0}
+                onClick={onClearCartButtonClick}
+                onKeyDown={(event) =>
+                  event.key === "Enter" ? onClearCartButtonClick() : ""
+                }
+                className="cart__clear"
+              >
                 <svg
                   width="20"
                   height="20"
@@ -91,6 +104,7 @@ function Cart() {
               {items.map((item, index) => (
                 <CartItem
                   key={`${index}-${item.name}-${item.price}`}
+                  id={item.id}
                   title={item.title}
                   imageUrl={item.imageUrl}
                   type={item.type}
