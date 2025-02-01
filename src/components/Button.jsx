@@ -1,6 +1,6 @@
-function Button({ children, classes }) {
+function Button({ onClick, children, classes }) {
   return (
-    <button tabIndex={0} className={[...classes].join(" ")} type="button">
+    <button onClick={onClick} tabIndex={0} className={[...classes].join(" ")} type="button">
       {children}
     </button>
   );

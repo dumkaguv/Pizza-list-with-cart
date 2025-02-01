@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import CartItem from "@/components/CartItem";
 import Header from "@/components/Header";
 
 function Cart() {
+  const { items, totalPrice, totalQuantity } = useSelector((state) => state.cart);
+
   return (
     <div className="wrapper">
       <Header />
@@ -85,18 +88,25 @@ function Cart() {
               </div>
             </div>
             <ul className="content__items content__items--cart">
-              <CartItem />
-              <CartItem />
-              <CartItem />
-              <CartItem />
+              {items.map((item, index) => (
+                <CartItem
+                  key={`${index}-${item.name}-${item.price}`}
+                  title={item.title}
+                  imageUrl={item.imageUrl}
+                  type={item.type}
+                  size={item.size}
+                  price={item.price}
+                  quantity={item.quantity}
+                />
+              ))}
             </ul>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
                 <span>
-                  Всего пицц: <b>3 шт.</b>
+                  Всего пицц: <b>{totalQuantity} шт.</b>
                 </span>
                 <span>
-                  Сумма заказа: <b>900 ₽</b>
+                  Сумма заказа: <b>{totalPrice} ₽</b>
                 </span>
               </div>
               <div className="cart__bottom-buttons">

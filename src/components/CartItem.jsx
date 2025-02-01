@@ -1,16 +1,18 @@
-function CartItem() {
+import { removeItem } from "@/redux/slices/cartSlice";
+
+function CartItem({ title, imageUrl, type, size, price, quantity }) {
+  function onButtonDeleteClick() {}
+
   return (
     <li className="cart__item">
       <div className="cart__item-img">
-        <img
-          className="pizza-block__image"
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-          alt="Pizza"
-        />
+        <img className="pizza-block__image" src={imageUrl} alt="" />
       </div>
       <div className="cart__item-info">
-        <h3>Сырный цыпленок</h3>
-        <p>тонкое тесто, 26 см.</p>
+        <h3>{title}</h3>
+        <p>
+          {type} тесто, {size} см.
+        </p>
       </div>
       <div className="cart__item-count">
         <div className="button button--outline button--circle cart__item-count-minus">
@@ -31,7 +33,7 @@ function CartItem() {
             />
           </svg>
         </div>
-        <b>2</b>
+        <b>{quantity}</b>
         <div className="button button--outline button--circle cart__item-count-plus">
           <svg
             width="10"
@@ -52,10 +54,14 @@ function CartItem() {
         </div>
       </div>
       <div className="cart__item-price">
-        <b>770 ₽</b>
+        <b>{quantity * price} ₽</b>
       </div>
       <div className="cart__item-remove">
-        <div className="button button--outline button--circle">
+        <button
+          onClick={onButtonDeleteClick}
+          className="button button--outline button--circle"
+          type="button"
+        >
           <svg
             width="10"
             height="10"
@@ -72,7 +78,7 @@ function CartItem() {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
     </li>
   );

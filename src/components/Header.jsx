@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import logo from "/img/pizza-logo.svg";
-import Cart from "./Cart";
+import Cart from "./CartHeader";
 import Search from "./Search";
 
 function Header({ isShowSearch = false }) {
