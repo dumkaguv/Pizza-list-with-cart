@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import { setTotalPages, setCurrentPage } from "@/redux/slices/paginationSlice";
+import { fetchData } from "@/redux/slices/pizzaSlice";
 import {
   getConcatedQueryParams,
   getParamsFromUrl,
@@ -18,16 +18,19 @@ import Pagination from "@/components/Pagination";
 const BASE_URL = "http://localhost:3000/api/pizzas";
 
 function PizzaList() {
-  const [pizzas, setPizzas] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [requestUrl, setRequestUrl] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { items: pizzas, totalPages: totalPagesPagination } = useSelector(
+    (state) => state.pizza.data
+  );
+
+  const status = useSelector((state) => state.pizza.status);
   const searchValue = useSelector((state) => state.search.searchValue);
   const { categoryId, sortId } = useSelector((state) => state.filter);
-  const { totalPages, currentPage } = useSelector((state) => state.pagination);
+  const { currentPage } = useSelector((state) => state.pagination);
 
   useEffect(() => {
     const urlParams = getParamsFromUrl();
@@ -54,36 +57,23 @@ function PizzaList() {
   useEffect(() => {
     if (!requestUrl) return;
 
-    const fetchPizzas = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get(requestUrl);
+    dispatch(fetchData(requestUrl));
+    dispatch(setTotalPages(totalPagesPagination));
 
-        setPizzas(data.data);
-        dispatch(setTotalPages(data.totalPages));
+    navigate(requestUrl.replace(BASE_URL, ""), { replace: true });
 
-        navigate(requestUrl.replace(BASE_URL, ""), { replace: true });
-      } catch (error) {
-        console.error("Ошибка загрузки данных:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    if (categoryId) {
+      dispatch(setCurrentPage(1));
+    }
 
-      if (categoryId) {
-        dispatch(setCurrentPage(1));
-      }
-
-      window.scrollTo(0, 0);
-    };
-
-    fetchPizzas();
+    window.scrollTo(0, 0);
   }, [requestUrl]);
 
   return (
     <>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {isLoading
+        {status === "loading"
           ? [...Array(6)].map((_, index) => <Skeleton key={index} />)
           : pizzas.map((pizza, index) => (
               <PizzaBlock key={`${pizza.title}-${index}`} {...pizza} />
@@ -91,7 +81,7 @@ function PizzaList() {
       </div>
       <Pagination
         currentPage={currentPage}
-        pageCount={totalPages}
+        pageCount={totalPagesPagination || 1}
         onPageChange={(page) => dispatch(setCurrentPage(page))}
       />
     </>

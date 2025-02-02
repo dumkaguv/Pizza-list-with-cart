@@ -8,6 +8,7 @@ const DATA_FILE = "./public/data/dataPizza.json";
 
 const readData = async () => {
   const data = await fs.readFile(DATA_FILE, "utf-8");
+
   return JSON.parse(data);
 };
 
@@ -62,7 +63,7 @@ app.get("/api/pizzas", async (req, res) => {
     const paginatedData = data.slice(startIndex, endIndex);
 
     res.json({
-      data: paginatedData,
+      items: paginatedData,
       totalItems,
       totalPages: Math.ceil(totalItems / itemsPerPage),
       currentPage: pageNumber,
