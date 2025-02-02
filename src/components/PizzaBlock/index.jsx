@@ -1,36 +1,43 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@/components/Button";
-import { addItem } from "@/redux/slices/cartSlice";
+import {
+  addItem,
+  selectIsInCart,
+  selectCartItemQuantity,
+} from "@/redux/slices/cartSlice";
 
-function PizzaBlock({ id, title, prices, imageUrl, sizes, types }) {
+function PizzaBlock(props) {
+  const { id, title, prices, imageUrl, sizes, types } = props;
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const [activeType, setActiveType] = useState(0);
   const [activePizzaSize, setActivePizzaSize] = useState(0);
   const [price, setPrice] = useState(Object.values(prices)[0]);
+
   const dispatch = useDispatch();
 
   const pricesValues = Object.values(prices);
   const typeName = ["тонкое", "традиционное"];
 
-  function onButtonAddClick() {
-    const item = {
-      id,
-      title,
-      imageUrl,
-      type: typeName[activeType],
-      size: sizes[activePizzaSize],
-      price: parseInt(price),
-    };
+  const item = {
+    id,
+    title,
+    imageUrl,
+    type: typeName[activeType],
+    size: sizes[activePizzaSize],
+    price: parseInt(price),
+  };
 
-    dispatch(addItem(item));
-  }
+  const isInCart = useSelector((state) => selectIsInCart(state, item));
+  const quantity = useSelector((state) => selectCartItemQuantity(state, item));
 
   return (
     <div className="pizza-block">
       <img
-        className="pizza-block__image"
+        className={`pizza-block__image ${isImageLoading ? "loading" : ""}`}
         src={imageUrl}
+        onLoad={() => setIsImageLoading(false)}
         alt="Pizza"
         width={260}
         height={260}
@@ -78,7 +85,7 @@ function PizzaBlock({ id, title, prices, imageUrl, sizes, types }) {
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">{price}</div>
         <Button
-          onClick={onButtonAddClick}
+          onClick={() => dispatch(addItem(item))}
           classes={["button button--outline button--add"]}
         >
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -88,7 +95,7 @@ function PizzaBlock({ id, title, prices, imageUrl, sizes, types }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>0</i>
+          {isInCart && <i>{quantity}</i>}
         </Button>
       </div>
     </div>

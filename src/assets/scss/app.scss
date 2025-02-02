@@ -475,3 +475,29 @@ body {
     }
   }
 }
+
+.pizza-block__image.loading {
+  background: #f3f3f3;
+  border-radius: 50%;
+  position: relative;
+}
+
+.pizza-block__image.loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f3f3f3 25%, #ecebeb 50%, #f3f3f3 75%);
+  background-size: 400% 400%;
+  animation: shimmer 1s infinite linear;
+  z-index: 100;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
