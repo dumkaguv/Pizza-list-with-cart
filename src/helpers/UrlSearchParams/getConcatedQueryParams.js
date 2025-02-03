@@ -1,6 +1,7 @@
 function getConcatedQueryParams(params = {}) {
   let searchParams = "";
-  Object.entries(params).forEach(([key, value], index) => {
+
+  Object.entries(params).forEach(([key, value]) => {
     if (value) {
       searchParams += `&${key}=${value}`;
     }

@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
 import { setSortId } from "@/redux/slices/filterSlice";
-import { sortOptions } from "@/constants/getSortOptionsMap";
+import { sortOptions } from "@/constants/sortOptionsMap";
 
 function Sort() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

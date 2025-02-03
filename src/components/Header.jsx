@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import logo from "/img/pizza-logo.svg";
 import Cart from "./CartHeader";
 import Search from "./Search";
 
-function Header({ isShowSearch = false }) {
+function Header() {
+  const { pathname } = useLocation();
+  const isShowSearch = pathname === "/";
+
   return (
     <div className="header">
       <div className="container">

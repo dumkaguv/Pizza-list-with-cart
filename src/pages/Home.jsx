@@ -5,8 +5,8 @@ import PizzaList from "../components/PizzaList";
 
 function Home() {
   return (
-    <div className="wrapper">
-      <Header isShowSearch={true} />
+    <div className="wrapper"> 
+      <Header />
       <main className="content">
         <div className="container">
           <div className="content__top">

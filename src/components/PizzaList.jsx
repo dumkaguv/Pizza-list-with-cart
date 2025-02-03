@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { setTotalPages, setCurrentPage } from "@/redux/slices/paginationSlice";
@@ -9,7 +9,8 @@ import {
   getParamsFromUrl,
   saveSearchParamsRedux,
 } from "@/helpers/UrlSearchParams";
-import sortOptionsMap from "@/constants/getSortOptionsMap";
+import sortOptionsMap from "@/constants/sortOptionsMap";
+import STATUSES from "@/constants/fetchStatuses";
 
 import PizzaBlock from "./PizzaBlock";
 import Skeleton from "./PizzaBlock/Skeleton";
@@ -25,6 +26,18 @@ function PizzaList() {
 
   const { items: pizzas, totalPages: totalPagesPagination } = useSelector(
     (state) => state.pizza.data
+  );
+
+  const pizzasList = useMemo(
+    () =>
+      (pizzas || []).map((pizza, index) => (
+        <PizzaBlock key={`${pizza.title}-${index}`} {...pizza} />
+      )),
+    [pizzas]
+  );
+  const skeleton = useMemo(
+    () => [...Array(6)].map((_, index) => <Skeleton key={index} />),
+    []
   );
 
   const status = useSelector((state) => state.pizza.status);
@@ -73,17 +86,29 @@ function PizzaList() {
     <>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {status === "loading"
-          ? [...Array(6)].map((_, index) => <Skeleton key={index} />)
-          : pizzas.map((pizza, index) => (
-              <PizzaBlock key={`${pizza.title}-${index}`} {...pizza} />
-            ))}
+        {status === STATUSES.error && (
+          <div className="content__error-info">
+            <h3>Пиццы не найдены 😕</h3>
+            <p>
+              К сожалению, произошла ошибка. Попробуйте повторить запрос позже.
+            </p>
+          </div>
+        )}
+        {status === STATUSES.loading ? skeleton : pizzasList}
+        {status === STATUSES.success && pizzasList.length === 0 && searchValue && (
+          <div className="content__error-info">
+            <h3>Пиццы не найдены 😕</h3>
+            <p>Попробуйте изменить параметры поиска.</p>
+          </div>
+        )}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        pageCount={totalPagesPagination || 1}
-        onPageChange={(page) => dispatch(setCurrentPage(page))}
-      />
+      {status === STATUSES.success && pizzasList.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          pageCount={totalPagesPagination || 1}
+          onPageChange={(page) => dispatch(setCurrentPage(page))}
+        />
+      )}
     </>
   );
 }

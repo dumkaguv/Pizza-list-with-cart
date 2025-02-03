@@ -12,16 +12,6 @@ const findItem = (items, item) => {
   }
 };
 
-export const selectIsInCart = (state, item) => {
-  return !!findItem(state.cart.items, item).item;
-};
-
-export const selectCartItemQuantity = (state, item) => {
-  const { item: existingItem } = findItem(state.cart.items, item);
-
-  return existingItem ? existingItem.quantity : 0;
-};
-
 const initialState = {
   items: [],
   totalPrice: 0,
@@ -75,6 +65,16 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const selectIsInCart = (state, item) => {
+  return !!findItem(state.cart.items, item).item;
+};
+
+export const selectCartItemQuantity = (state, item) => {
+  const { item: existingItem } = findItem(state.cart.items, item);
+
+  return existingItem ? existingItem.quantity : 0;
+};
 
 export const {
   addItem,

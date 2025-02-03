@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import CartItem from "@/components/CartItem";
@@ -9,10 +9,16 @@ import { clearCart } from "@/redux/slices/cartSlice";
 function Cart() {
   const { items, totalPrice, totalQuantity } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function onClearCartButtonClick() {
     dispatch(clearCart());
   }
+
+  const handleBackClick = (e) => {
+    e.preventDefault();
+    navigate(-1);
+  };
 
   return (
     <div className="wrapper">
@@ -127,7 +133,8 @@ function Cart() {
                 </div>
                 <div className="cart__bottom-buttons">
                   <Link
-                    to="/"
+                    to="#"
+                    onClick={handleBackClick}
                     className="button button--outline button--add go-back-btn"
                   >
                     <svg

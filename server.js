@@ -22,7 +22,14 @@ app.get("/api/pizzas", async (req, res) => {
     let data = await readData();
 
     // ======== Фильтрация ========
-    const { categoryId, searchValue, sortId, order, currentPage = 1, limit = 8 } = req.query;
+    const {
+      categoryId,
+      searchValue,
+      sortId,
+      order,
+      currentPage = 1,
+      limit = 8,
+    } = req.query;
 
     if (categoryId) {
       data = data.filter((item) => item.category === parseInt(categoryId));
@@ -31,10 +38,7 @@ app.get("/api/pizzas", async (req, res) => {
     // ======== Поиск ========
     if (searchValue) {
       const searchLower = searchValue.toLowerCase();
-      data = data.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchLower)
-      );
+      data = data.filter((item) => item.title.toLowerCase().includes(searchLower));
     }
 
     // ======== Сортировка ========
@@ -69,6 +73,24 @@ app.get("/api/pizzas", async (req, res) => {
       currentPage: pageNumber,
       itemsPerPage,
     });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Ошибка при обработке данных" });
+  }
+});
+
+app.get("/api/pizzas/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await readData();
+
+    const pizza = data.find((item) => item.id === parseInt(id));
+
+    if (!pizza) {
+      return res.status(404).json({ error: "Пицца не найдена" });
+    }
+
+    res.json(pizza);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Ошибка при обработке данных" });

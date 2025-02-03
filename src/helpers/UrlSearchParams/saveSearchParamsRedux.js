@@ -2,7 +2,7 @@ import { store } from "@/redux/store";
 import { setCurrentPage } from "@/redux/slices/paginationSlice";
 import { setSearchValue } from "@/redux/slices/searchSlice";
 import { setCategoryId, setSortId } from "@/redux/slices/filterSlice";
-import { OptionToIndexMap } from "@/constants/getSortOptionsMap";
+import { OptionToIndexMap } from "@/constants/sortOptionsMap";
 import getParamsFromUrl from "./getParamsFromUrl";
 
 function saveSearchParamsRedux(queryString) {

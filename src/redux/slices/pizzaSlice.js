@@ -1,12 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+import STATUSES from "@/constants/fetchStatuses";
+
 const BASE_URL = "http://localhost:3000/api/pizzas";
-const STATUSES = {
-  loading: "loading",
-  success: "success",
-  error: "error",
-};
 
 export const fetchData = createAsyncThunk(
   "pizza/fetchData",

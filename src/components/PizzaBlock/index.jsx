@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,6 +8,8 @@ import {
   selectIsInCart,
   selectCartItemQuantity,
 } from "@/redux/slices/cartSlice";
+
+import PIZZA_TYPES from "@/constants/pizzaTypes";
 
 function PizzaBlock(props) {
   const { id, title, prices, imageUrl, sizes, types } = props;
@@ -18,13 +21,12 @@ function PizzaBlock(props) {
   const dispatch = useDispatch();
 
   const pricesValues = Object.values(prices);
-  const typeName = ["тонкое", "традиционное"];
 
   const item = {
     id,
     title,
     imageUrl,
-    type: typeName[activeType],
+    type: PIZZA_TYPES[activeType],
     size: sizes[activePizzaSize],
     price: parseInt(price),
   };
@@ -34,15 +36,19 @@ function PizzaBlock(props) {
 
   return (
     <div className="pizza-block">
-      <img
-        className={`pizza-block__image ${isImageLoading ? "loading" : ""}`}
-        src={imageUrl}
-        onLoad={() => setIsImageLoading(false)}
-        alt="Pizza"
-        width={260}
-        height={260}
-        loading="lazy"
-      />
+      <Link
+        to={`/pizza/${id}?type=${activeType}&size=${item.size}&price=${item.price}`}
+      >
+        <img
+          className={`pizza-block__image ${isImageLoading ? "loading" : ""}`}
+          src={imageUrl}
+          onLoad={() => setIsImageLoading(false)}
+          alt="Pizza"
+          width={260}
+          height={260}
+          loading="lazy"
+        />
+      </Link>
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
@@ -56,7 +62,7 @@ function PizzaBlock(props) {
               key={`type-${typeIndex}-${index}`}
               tabIndex="0"
             >
-              {typeName[typeIndex]}
+              {PIZZA_TYPES[typeIndex]}
             </li>
           ))}
         </ul>
