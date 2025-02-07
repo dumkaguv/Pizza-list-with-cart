@@ -31,7 +31,7 @@ function Search() {
 
   function onChangeInput(event: React.ChangeEvent<HTMLInputElement>) {
     setValue(event.target.value);
-    updateSearchValue(event.target.value);
+    updateSearchValue(event.target.value)
   }
 
   function onButtonClearClick() {
