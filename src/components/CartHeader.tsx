@@ -1,12 +1,15 @@
+import React from "react";
+
+import { RootState } from "@/redux/store";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function CartHeader() {
-  const { totalPrice, totalQuantity } = useSelector((state) => state.cart);
+const CartHeader: React.FC = () => {
+  const { totalPrice, totalQuantity } = useSelector((state: RootState) => state.cart);
 
   return (
     <div className="header__cart">
-      <Link to="/cart" className="button button--cart" tabIndex="0">
+      <Link to="/cart" className="button button--cart" tabIndex={0}>
         <span>{totalPrice} ₽</span>
         <div className="button__delimiter"></div>
         <svg

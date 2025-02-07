@@ -1,10 +1,11 @@
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function CartEmpty() {
+const CartEmpty: React.FC = () =>  {
   const navigate = useNavigate();
 
-  const handleBackClick = (e) => {
-    e.preventDefault();
+  const handleBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     navigate(-1);
   };
 
@@ -22,6 +23,6 @@ function CartEmpty() {
       </Link>
     </div>
   );
-}
+};
 
 export default CartEmpty;

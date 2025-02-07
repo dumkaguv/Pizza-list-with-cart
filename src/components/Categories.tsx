@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId } from "@/redux/slices/filterSlice";
 import categories from "@/constants/categories";
 
+import { RootState } from "@/redux/store";
+
 function Categories() {
   const dispatch = useDispatch();
-  const categoryId = useSelector((state) => state.filter.categoryId);
+  const categoryId = useSelector((state: RootState) => state.filter.categoryId);
 
   return (
     <div className="categories">
@@ -19,7 +21,7 @@ function Categories() {
               }
             }}
             className={categoryId === index ? "active" : ""}
-            tabIndex="0"
+            tabIndex={0}
             key={index}
           >
             {category}

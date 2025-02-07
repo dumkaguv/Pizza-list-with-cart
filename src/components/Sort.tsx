@@ -1,16 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
+import { RootState } from "@/redux/store";
 import { setSortId } from "@/redux/slices/filterSlice";
 import { sortOptions } from "@/constants/sortOptionsMap";
 
 function Sort() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const dispatch = useDispatch();
-  const sortOptionIndex = useSelector((state) => state.filter.sortId);
+  const sortOptionIndex = useSelector((state: RootState) => state.filter.sortId);
 
-  function onClickOutside(event) {
-    const isClickOutside = !event.target.closest(".sort");
+  function onClickOutside(event: MouseEvent) {
+    const isClickOutside = !(event.target as Element).closest(".sort");
 
     if (isClickOutside) {
       setIsPopupOpen(false);
@@ -18,10 +19,10 @@ function Sort() {
   }
 
   useEffect(() => {
-    window.addEventListener("click", onClickOutside);
+    document.addEventListener("click", onClickOutside);
 
     return () => {
-      window.removeEventListener("click", onClickOutside);
+      document.removeEventListener("click", onClickOutside);
     };
   }, []);
 
@@ -49,7 +50,7 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span tabIndex="0">{sortOptions[sortOptionIndex]}</span>
+        <span tabIndex={0}>{sortOptions[sortOptionIndex]}</span>
       </div>
       {isPopupOpen && (
         <div className="sort__popup">

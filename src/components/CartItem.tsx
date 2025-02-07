@@ -2,9 +2,18 @@ import { useDispatch } from "react-redux";
 
 import { removeItem, handleItemQuantity } from "@/redux/slices/cartSlice";
 
-function CartItem(props) {
+type CartItemProps = {
+  title: string;
+  imageUrl: string;
+  type: string;
+  size: number;
+  price: number;
+  quantity: number;
+};
+
+const CartItem: React.FC<CartItemProps> = (props) => {
   const dispatch = useDispatch();
-  const { id, title, imageUrl, type, size, price, quantity } = props;
+  const { title, imageUrl, type, size, price, quantity } = props;
 
   function onButtonDeleteClick() {
     dispatch(removeItem(props));
@@ -101,6 +110,6 @@ function CartItem(props) {
       </div>
     </li>
   );
-}
+};
 
 export default CartItem;

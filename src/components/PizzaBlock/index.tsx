@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@/components/Button";
@@ -8,10 +8,20 @@ import {
   selectIsInCart,
   selectCartItemQuantity,
 } from "@/redux/slices/cartSlice";
+import { RootState } from "@/redux/store";
 
 import PIZZA_TYPES from "@/constants/pizzaTypes";
 
-function PizzaBlock(props) {
+type PizzaBlockProps = {
+  id: number;
+  title: string;
+  prices: { [key: string]: string }; // Record <string, number>
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
   const { id, title, prices, imageUrl, sizes, types } = props;
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [activeType, setActiveType] = useState(0);
@@ -31,8 +41,10 @@ function PizzaBlock(props) {
     price: parseInt(price),
   };
 
-  const isInCart = useSelector((state) => selectIsInCart(state, item));
-  const quantity = useSelector((state) => selectCartItemQuantity(state, item));
+  const isInCart = useSelector((state: RootState) => selectIsInCart(state, item));
+  const quantity = useSelector((state: RootState) =>
+    selectCartItemQuantity(state, item)
+  );
 
   return (
     <div className="pizza-block">
@@ -60,7 +72,7 @@ function PizzaBlock(props) {
               }}
               className={index === activeType ? "active" : ""}
               key={`type-${typeIndex}-${index}`}
-              tabIndex="0"
+              tabIndex={0}
             >
               {PIZZA_TYPES[typeIndex]}
             </li>
@@ -81,7 +93,7 @@ function PizzaBlock(props) {
                 }
               }}
               key={`size-${size}-${index}`}
-              tabIndex="0"
+              tabIndex={0}
             >
               {size} см.
             </li>
@@ -106,6 +118,6 @@ function PizzaBlock(props) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

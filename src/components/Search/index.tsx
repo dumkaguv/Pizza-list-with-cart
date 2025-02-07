@@ -1,34 +1,41 @@
-import { useRef, useCallback, useState, useEffect } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
 
 import { setSearchValue } from "@/redux/slices/searchSlice";
+
+import { RootState } from "@/redux/store";
 import styles from "./Search.module.scss";
 
 function Search() {
-  const reduxSearchValue = useSelector((state) => state.search.searchValue) || "";
+  const reduxSearchValue = useSelector((state: RootState) => state.search.searchValue);
   const [value, setValue] = useState(reduxSearchValue);
   const dispatch = useDispatch();
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setValue(reduxSearchValue);
   }, [reduxSearchValue]);
 
-  const updateSearchValue = useCallback(
-    debounce((str) => {
-      dispatch(setSearchValue(str));
-    }, 350),
-    []
+  const updateSearchValue = useMemo(
+    () =>
+      debounce((str: string) => {
+        dispatch(setSearchValue(str));
+      }, 350),
+    [dispatch]
   );
 
-  function onChangeInput(event) {
+  useEffect(() => {
+    return () => updateSearchValue.cancel();
+  }, [updateSearchValue]);
+
+  function onChangeInput(event: React.ChangeEvent<HTMLInputElement>) {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   }
 
   function onButtonClearClick() {
-    inputRef.current.focus();
+    inputRef.current?.focus();
     setValue("");
     dispatch(setSearchValue(""));
   }

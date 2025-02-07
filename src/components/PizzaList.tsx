@@ -16,7 +16,21 @@ import PizzaBlock from "./PizzaBlock";
 import Skeleton from "./PizzaBlock/Skeleton";
 import Pagination from "@/components/Pagination";
 
+import { RootState } from "@/redux/store";
+
 const BASE_URL = "http://localhost:3000/api/pizzas";
+
+type Pizza = {
+  id: number;
+  imageUrl: string;
+  title: string;
+  types: number[];
+  size: number[];
+  price: Record<string, string>;
+  category: number;
+  rating: number;
+  ingredients: string[];
+};
 
 function PizzaList() {
   const [requestUrl, setRequestUrl] = useState("");
@@ -25,7 +39,7 @@ function PizzaList() {
   const navigate = useNavigate();
 
   const { items: pizzas, totalPages: totalPagesPagination } = useSelector(
-    (state) => state.pizza.data
+    (state: RootState) => state.pizza.data
   );
 
   const pizzasList = useMemo(
@@ -40,10 +54,10 @@ function PizzaList() {
     []
   );
 
-  const status = useSelector((state) => state.pizza.status);
-  const searchValue = useSelector((state) => state.search.searchValue);
-  const { categoryId, sortId } = useSelector((state) => state.filter);
-  const { currentPage } = useSelector((state) => state.pagination);
+  const status = useSelector((state: RootState) => state.pizza.status);
+  const searchValue = useSelector((state: RootState) => state.search.searchValue);
+  const { categoryId, sortId } = useSelector((state: RootState) => state.filter);
+  const { currentPage } = useSelector((state: RootState) => state.pagination);
 
   useEffect(() => {
     const urlParams = getParamsFromUrl();
@@ -105,8 +119,8 @@ function PizzaList() {
       {status === STATUSES.success && pizzasList.length > 0 && (
         <Pagination
           currentPage={currentPage}
-          pageCount={totalPagesPagination || 1}
-          onPageChange={(page) => dispatch(setCurrentPage(page))}
+          pageCount={totalPagesPagination}
+          onPageChange={(page: number) => dispatch(setCurrentPage(page))}
         />
       )}
     </>
