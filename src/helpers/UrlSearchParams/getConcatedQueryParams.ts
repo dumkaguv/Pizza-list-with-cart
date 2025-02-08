@@ -1,4 +1,4 @@
-function getConcatedQueryParams(params = {}) {
+function getConcatedQueryParams(params: Record<string, string | number> = {}) {
   let searchParams = "";
 
   Object.entries(params).forEach(([key, value]) => {

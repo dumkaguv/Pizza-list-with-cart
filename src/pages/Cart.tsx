@@ -16,8 +16,8 @@ function Cart() {
     dispatch(clearCart());
   }
 
-  const handleBackClick = (e: any) => {
-    e.preventDefault();
+  const handleBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     navigate(-1);
   };
 

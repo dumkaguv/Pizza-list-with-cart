@@ -7,6 +7,7 @@ import {
   addItem,
   selectIsInCart,
   selectCartItemQuantity,
+  CartItem,
 } from "@/redux/slices/cartSlice";
 import { RootState } from "@/redux/store";
 
@@ -15,7 +16,7 @@ import PIZZA_TYPES from "@/constants/pizzaTypes";
 type PizzaBlockProps = {
   id: number;
   title: string;
-  prices: { [key: string]: string }; // Record <string, number>
+  prices: Record<string, string>; // { [key: string]: string }
   imageUrl: string;
   sizes: number[];
   types: number[];
@@ -32,7 +33,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = (props) => {
 
   const pricesValues = Object.values(prices);
 
-  const item = {
+  const item: CartItem = {
     id,
     title,
     imageUrl,

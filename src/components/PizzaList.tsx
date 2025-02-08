@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppdispatch } from "@/redux/store";
 
 import { setTotalPages, setCurrentPage } from "@/redux/slices/paginationSlice";
 import { fetchData } from "@/redux/slices/pizzaSlice";
@@ -35,7 +36,7 @@ type Pizza = {
 function PizzaList() {
   const [requestUrl, setRequestUrl] = useState("");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppdispatch();
   const navigate = useNavigate();
 
   const { items: pizzas, totalPages: totalPagesPagination } = useSelector(

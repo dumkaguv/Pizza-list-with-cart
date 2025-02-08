@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch, UseDispatch } from "react-redux";
 
 import filterReducer from "./slices/filterSlice";
 import paginationReducer from "./slices/paginationSlice";
@@ -18,3 +19,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useAppdispatch = () => useDispatch<AppDispatch>();

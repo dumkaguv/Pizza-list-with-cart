@@ -5,7 +5,7 @@ import { setCategoryId, setSortId } from "@/redux/slices/filterSlice";
 import { OptionToIndexMap } from "@/constants/sortOptionsMap";
 import getParamsFromUrl from "./getParamsFromUrl";
 
-function saveSearchParamsRedux(queryString) {
+function saveSearchParamsRedux(queryString = "") {
   const urlParams = new URLSearchParams(queryString);
 
   urlParams.forEach((value, key) => {

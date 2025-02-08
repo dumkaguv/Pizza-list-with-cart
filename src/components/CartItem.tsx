@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { removeItem, handleItemQuantity } from "@/redux/slices/cartSlice";
 
 type CartItemProps = {
+  id: number;
   title: string;
   imageUrl: string;
   type: string;

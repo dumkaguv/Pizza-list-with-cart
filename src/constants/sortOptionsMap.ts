@@ -5,7 +5,7 @@ const SORT_OPTIONS_MAP: Record<number, string> = {
   3: "prices&order=asc",
   4: "title&order=desc",
   5: "title&order=asc",
-};
+} as const;
 
 export const sortOptions: string[] = [
   "Популярности ↓",
@@ -14,7 +14,7 @@ export const sortOptions: string[] = [
   "Цене ↑",
   "Алфавиту ↓",
   "Алфавиту ↑",
-];
+] as const;
 
 export const OptionToIndexMap: Record<string, number> = {
   "rating&order=desc": 0,
@@ -23,6 +23,6 @@ export const OptionToIndexMap: Record<string, number> = {
   "prices&order=asc": 3,
   "title&order=desc": 4,
   "title&order=asc": 5,
-};
+} as const;
 
 export default SORT_OPTIONS_MAP;

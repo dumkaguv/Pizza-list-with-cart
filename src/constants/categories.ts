@@ -5,6 +5,6 @@ const CATEGORIES = [
   "Гриль",
   "Острые",
   "Закрытые",
-];
+] as const;
 
 export default CATEGORIES;
