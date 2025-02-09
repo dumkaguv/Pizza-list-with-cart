@@ -6,7 +6,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://pizza-list-with-cart.vercel-api.app",
+      "https://pizza-list-with-cart-api.vercel.app",
       "https://pizza-list-with-cart.vercel.app",
       "http://localhost:5173",
       "http://localhost:3000"

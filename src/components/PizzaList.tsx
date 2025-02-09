@@ -20,7 +20,7 @@ import Pagination from "@/components/Pagination";
 import { RootState } from "@/redux/store";
 
 const BASE_URL =
-  "https://pizza-list-with-cart.vercel-api.app/api/pizzas";
+  "https://pizza-list-with-cart-api.vercel.app/api/pizzas";
 // http://localhost:3000/api/pizzas
 
 type Selector = {
