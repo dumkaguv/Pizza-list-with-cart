@@ -1,16 +1,20 @@
 import express from "express";
 import cors from "cors";
-import fs from "fs/promises";
+import data from "./data/dataPizza.json" with { type: "json" };
 
 const app = express();
-app.use(cors());
-const DATA_FILE = "public/data/dataPizza.json";
-
-const readData = async () => {
-  const data = await fs.readFile(DATA_FILE, "utf-8");
-
-  return JSON.parse(data);
-};
+app.use(
+  cors({
+    origin: [
+      "https://pizza-list-with-cart.vercel-api.app",
+      "https://pizza-list-with-cart.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:3000"
+    ],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the server!");
@@ -19,7 +23,6 @@ app.get("/", (req, res) => {
 // ==================== API ====================
 app.get("/api/pizzas", async (req, res) => {
   try {
-    let data = await readData();
 
     // ======== Фильтрация ========
     const {
@@ -82,7 +85,6 @@ app.get("/api/pizzas", async (req, res) => {
 app.get("/api/pizzas/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await readData();
 
     const pizza = data.find((item) => item.id === parseInt(id));
 

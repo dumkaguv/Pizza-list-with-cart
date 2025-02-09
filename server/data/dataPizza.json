@@ -1,0 +1,169 @@
+[
+  {
+    "id": 0,
+    "imageUrl": "https://irecommend.ru/sites/default/files/product-images/1516270/6IAtySyGbIMawbFiAtGCKA.jpg",
+    "title": "Пепперони Фреш",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "prices": {
+      "small": "465 ₽",
+      "medium": "545 ₽",
+      "big": "635 ₽"
+    },
+    "category": 1,
+    "rating": 4,
+    "ingredients": ["Пепперони", "Томатный соус", "Моцарелла", "Базилик"]
+  },
+  {
+    "id": 1,
+    "imageUrl": "https://tashirpizza.ru/images/products/506-1300.png",
+    "title": "Сырная",
+    "types": [0],
+    "sizes": [26, 40],
+    "prices": {
+      "small": "245 ₽",
+      "big": "315 ₽"
+    },
+    "category": 2,
+    "rating": 6,
+    "ingredients": ["Моцарелла", "Томатный соус", "Чеддер", "Пармезан"]
+  },
+  {
+    "id": 2,
+    "imageUrl": "https://cdn.clever.by/assets/2023/10/27/86f0a1d423dfb8f5c80fee48e7dce1d2---jpg_710x_83b40_convert.jpg",
+    "title": "Цыпленок барбекю",
+    "types": [0],
+    "sizes": [26, 40],
+    "prices": {
+      "small": "295 ₽",
+      "big": "375 ₽"
+    },
+    "category": 1,
+    "rating": 4,
+    "ingredients": ["Курица", "Барбекю соус", "Красный лук", "Моцарелла"]
+  },
+  {
+    "id": 3,
+    "imageUrl": "https://sun1-91.userapi.com/impg/sIt94tEBil_1MQjWAQQlM4Ouzp4ZgwMqRIZarA/ZgJa_PlEx0M.jpg?size=520x0&quality=95&sign=b1995df84faf271e06d7b1e2bcf56b6b",
+    "title": "Кисло-сладкий цыпленок",
+    "types": [1],
+    "sizes": [26, 30, 40],
+    "prices": {
+      "small": "275 ₽",
+      "medium": "325 ₽",
+      "big": "385 ₽"
+    },
+    "category": 2,
+    "rating": 2,
+    "ingredients": [
+      "Курица",
+      "Кисло-сладкий соус",
+      "Паприка",
+      "Красный лук",
+      "Томатный соус"
+    ]
+  },
+  {
+    "id": 4,
+    "imageUrl": "https://thebox.md/wp-content/uploads/2024/02/httpscdneu.syrve_.comnomenclature_images_test1822064da5f5744-47e6-441d-aa18-bf01728d555c-500x500.png",
+    "title": "Чизбургер-пицца",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "prices": {
+      "small": "415 ₽",
+      "medium": "485 ₽",
+      "big": "555 ₽"
+    },
+    "category": 3,
+    "rating": 8,
+    "ingredients": [
+      "Говядина",
+      "Чеддер",
+      "Салат",
+      "Помидоры",
+      "Томатный соус",
+      "Моцарелла"
+    ]
+  },
+  {
+    "id": 5,
+    "imageUrl": "https://sun9-66.userapi.com/impg/2B-Scl0Zbw6_Gv-jMcYRsjt3DSwnSrHH-Lmv_A/YbnbvtZ-JOs.jpg?size=580x580&quality=96&sign=b23cce3f1f4c165a8d69b9eab1908d36&type=none",
+    "title": "Крэйзи пепперони",
+    "types": [0],
+    "sizes": [30, 40],
+    "prices": {
+      "medium": "580 ₽",
+      "big": "675 ₽"
+    },
+    "category": 2,
+    "rating": 2,
+    "ingredients": ["Пепперони", "Моцарелла", "Томатный соус", "Острый соус"]
+  },
+  {
+    "id": 6,
+    "imageUrl": "https://thebox.md/wp-content/uploads/2023/06/httpscdneu.syrve_.comnomenclature_images_test18220648ef35680-5102-491b-83ce-742c61e9d685-1.png",
+    "title": "Пепперони",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "prices": {
+      "small": "435 ₽",
+      "medium": "554 ₽",
+      "big": "620 ₽"
+    },
+    "category": 2,
+    "rating": 8,
+    "ingredients": ["Пепперони", "Томатный соус", "Моцарелла"]
+  },
+  {
+    "id": 7,
+    "imageUrl": "https://the-cafe.ru/wp-content/uploads/2020/11/147c3814bbb34a77afdbc66e9ef20ed7_584x584.jpeg",
+    "title": "Маргарита",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "prices": {
+      "small": "450 ₽",
+      "medium": "520 ₽",
+      "big": "590 ₽"
+    },
+    "category": 4,
+    "rating": 10,
+    "ingredients": ["Моцарелла", "Томатный соус", "Базилик"]
+  },
+  {
+    "id": 8,
+    "imageUrl": "https://tashirpizza.ru/images/products/399-1372.png",
+    "title": "Четыре сезона",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "prices": {
+      "small": "395 ₽",
+      "medium": "455 ₽",
+      "big": "515 ₽"
+    },
+    "category": 5,
+    "rating": 10,
+    "ingredients": [
+      "Грибы",
+      "Моцарелла",
+      "Томатный соус",
+      "Ветчина",
+      "Оливки",
+      "Артишоки"
+    ]
+  },
+  {
+    "id": 9,
+    "imageUrl": "https://img-api.yumapos.ru/image/crop/512x512/e11a583e-332e-7cf8-91f3-3e4a8dedafd5.jpg",
+    "title": "Овощи и грибы",
+    "types": [0, 1],
+    "sizes": [26, 30, 40],
+    "prices": {
+      "small": "285 ₽",
+      "medium": "345 ₽",
+      "big": "405 ₽"
+    },
+    "category": 5,
+    "rating": 7,
+    "ingredients": ["Овощи", "Грибы", "Моцарелла", "Томатный соус"]
+  }
+]
