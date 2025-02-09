@@ -10,7 +10,7 @@ Challenge is to build out this React Pizza website.
 
 This project was created using React, SCSS, Vite, Redux Toolkit, TypeScript, React-router-dom.
 
-Link to see the result: [React Pizza]()
+Link to see the result: [React Pizza](https://pizza-list-with-cart.vercel.app/)
 
 ## Getting Started 🚀
 
