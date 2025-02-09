@@ -10,6 +10,7 @@ import {
   selectCartItemQuantity,
 } from "@/redux/slices/cartSlice";
 import PIZZA_TYPES from "@/constants/pizzaTypes";
+import { RootState } from "@/redux/store";
 
 const BASE_URL: string = "http://localhost:3000/api/pizzas";
 
@@ -40,11 +41,11 @@ const FullPizza: React.FC = () => {
     price,
   };
 
-  const isInCart = useSelector((state) => selectIsInCart(state, item));
-  const quantity = useSelector((state) => selectCartItemQuantity(state, item));
+  const isInCart = useSelector((state: RootState) => selectIsInCart(state, item));
+  const quantity = useSelector((state: RootState) => selectCartItemQuantity(state, item));
 
-  const handleBackClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
+  const handleBackClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     navigate(-1);
   };
 
@@ -58,7 +59,7 @@ const FullPizza: React.FC = () => {
         console.error("Ошибка загрузки пиццы:", error);
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [id]);
 
   return (
     <div className="container">

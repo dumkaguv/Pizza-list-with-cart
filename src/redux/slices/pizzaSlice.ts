@@ -5,7 +5,7 @@ import STATUSES from "@/constants/fetchStatuses";
 
 const BASE_URL = "http://localhost:3000/api/pizzas";
 
-type Pizza = {
+export type Pizza = {
   id: number;
   imageUrl: string;
   title: string;

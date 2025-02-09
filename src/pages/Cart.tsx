@@ -3,16 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 
 import CartItem from "@/components/CartItem";
 import CartEmpty from "@/components/CartEmpty";
-import { clearCart } from "@/redux/slices/cartSlice";
+import { clearCart, setCartFromLocalStorage } from "@/redux/slices/cartSlice";
 
 import { RootState } from "@/redux/store";
+import { useEffect } from "react";
 
 function Cart() {
   const { items, totalPrice, totalQuantity } = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function onClearCartButtonClick() {
+  useEffect(() => {
+    dispatch(setCartFromLocalStorage())
+  }, [dispatch])
+
+  const onClearCartButtonClick = () => {
     dispatch(clearCart());
   }
 
@@ -109,14 +114,14 @@ function Cart() {
           <ul className="content__items content__items--cart">
             {items.map((item, index) => (
               <CartItem
-                key={`${index}-${item.name}-${item.price}`}
+                key={`${index}-${item.title}-${item.price}`}
                 id={item.id}
                 title={item.title}
                 imageUrl={item.imageUrl}
                 type={item.type}
                 size={item.size}
                 price={item.price}
-                quantity={item.quantity}
+                quantity={item.quantity ?? 0}
               />
             ))}
           </ul>

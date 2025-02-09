@@ -1,14 +1,20 @@
-import { useRef, useMemo, useState, useEffect } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import debounce from "lodash.debounce";
+import { useLocation } from "react-router-dom";
 
 import { setSearchValue } from "@/redux/slices/searchSlice";
 
 import { RootState } from "@/redux/store";
 import styles from "./Search.module.scss";
 
-function Search() {
-  const reduxSearchValue = useSelector((state: RootState) => state.search.searchValue);
+const Search: React.FC = () => {
+  const { pathname } = useLocation();
+  const isShowSearch = pathname === "/";
+
+  const reduxSearchValue = useSelector(
+    (state: RootState) => state.search.searchValue
+  );
   const [value, setValue] = useState(reduxSearchValue);
   const dispatch = useDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -31,13 +37,17 @@ function Search() {
 
   function onChangeInput(event: React.ChangeEvent<HTMLInputElement>) {
     setValue(event.target.value);
-    updateSearchValue(event.target.value)
+    updateSearchValue(event.target.value);
   }
 
   function onButtonClearClick() {
     inputRef.current?.focus();
     setValue("");
     dispatch(setSearchValue(""));
+  }
+
+  if (!isShowSearch) {
+    return null;
   }
 
   return (
@@ -90,6 +100,6 @@ function Search() {
       )}
     </div>
   );
-}
+};
 
 export default Search;

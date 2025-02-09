@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppdispatch } from "@/redux/store";
 
 import { setTotalPages, setCurrentPage } from "@/redux/slices/paginationSlice";
-import { fetchData } from "@/redux/slices/pizzaSlice";
+import { fetchData, Pizza } from "@/redux/slices/pizzaSlice";
 import {
   getConcatedQueryParams,
   getParamsFromUrl,
@@ -21,19 +21,12 @@ import { RootState } from "@/redux/store";
 
 const BASE_URL = "http://localhost:3000/api/pizzas";
 
-type Pizza = {
-  id: number;
-  imageUrl: string;
-  title: string;
-  types: number[];
-  size: number[];
-  price: Record<string, string>;
-  category: number;
-  rating: number;
-  ingredients: string[];
+type Selector = {
+  items: Pizza[];
+  totalPages: number;
 };
 
-function PizzaList() {
+const PizzaList: React.FC = () => {
   const [requestUrl, setRequestUrl] = useState("");
 
   const dispatch = useAppdispatch();
@@ -41,7 +34,7 @@ function PizzaList() {
 
   const { items: pizzas, totalPages: totalPagesPagination } = useSelector(
     (state: RootState) => state.pizza.data
-  );
+  ) as unknown as Selector;
 
   const pizzasList = useMemo(
     () =>
@@ -101,7 +94,7 @@ function PizzaList() {
     <>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {status === STATUSES.error && (
+        {status === STATUSES.ERROR && (
           <div className="content__error-info">
             <h3>Пиццы не найдены 😕</h3>
             <p>
@@ -109,15 +102,15 @@ function PizzaList() {
             </p>
           </div>
         )}
-        {status === STATUSES.loading ? skeleton : pizzasList}
-        {status === STATUSES.success && pizzasList.length === 0 && searchValue && (
+        {status === STATUSES.LOADING ? skeleton : pizzasList}
+        {status === STATUSES.SUCCESS && pizzasList.length === 0 && searchValue && (
           <div className="content__error-info">
             <h3>Пиццы не найдены 😕</h3>
             <p>Попробуйте изменить параметры поиска.</p>
           </div>
         )}
       </div>
-      {status === STATUSES.success && pizzasList.length > 0 && (
+      {status === STATUSES.SUCCESS && pizzasList.length > 0 && (
         <Pagination
           currentPage={currentPage}
           pageCount={totalPagesPagination}
@@ -126,6 +119,6 @@ function PizzaList() {
       )}
     </>
   );
-}
+};
 
 export default PizzaList;

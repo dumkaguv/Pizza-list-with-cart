@@ -1,14 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import logo from "/img/pizza-logo.svg";
 import Cart from "./CartHeader";
 import Search from "./Search";
 
 const Header: React.FC = () => {
-  const { pathname } = useLocation();
-  const isShowSearch = pathname === "/";
-
   return (
     <div className="header">
       <div className="container">
@@ -21,7 +18,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        {isShowSearch && <Search />}
+        <Search />
         <Cart />
       </div>
     </div>

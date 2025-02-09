@@ -83,10 +83,15 @@ const cartSlice = createSlice({
           action.payload.quantityChange + (existingItem.quantity ?? 0);
         state.totalQuantity += action.payload.quantityChange;
 
-        if (existingItem.quantity && existingItem.quantity <= 0) {
+        if (existingItem.quantity <= 0) {
           state.items.splice(index, 1);
         }
       }
+    },
+    setCartFromLocalStorage(state) {
+      state.items = getCartFromLocalStorage();
+      state.totalPrice = calculateTotalCartPrice();
+      state.totalQuantity = calculateTotalCartItems();
     },
     clearCart(state) {
       state.items = [];
@@ -95,6 +100,25 @@ const cartSlice = createSlice({
     },
   },
 });
+
+function getCartFromLocalStorage() {
+  return JSON.parse(localStorage.getItem("cart") || "[]") as CartItem[];
+}
+
+function calculateTotalCartPrice() {
+  return getCartFromLocalStorage().reduce(
+    (totalPrice: number, item: CartItem) =>
+      (totalPrice += (item.quantity ?? 0) * item.price),
+    0
+  );
+}
+
+function calculateTotalCartItems() {
+  return getCartFromLocalStorage().reduce(
+    (totalItems: number, item: CartItem) => (totalItems += item.quantity ?? 0),
+    0
+  );
+}
 
 export const selectIsInCart = (state: RootState, item: CartItem) => {
   return !!findItem(state.cart.items, item).item;
@@ -106,7 +130,12 @@ export const selectCartItemQuantity = (state: RootState, item: CartItem) => {
   return existingItem ? existingItem.quantity : 0;
 };
 
-export const { addItem, removeItem, handleItemQuantity, clearCart } =
-  cartSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  handleItemQuantity,
+  setCartFromLocalStorage,
+  clearCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

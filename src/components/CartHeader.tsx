@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const CartHeader: React.FC = () => {
-  const { totalPrice, totalQuantity } = useSelector((state: RootState) => state.cart);
+  const { totalPrice, totalQuantity } = useSelector(
+    (state: RootState) => state.cart
+  );
 
   return (
     <div className="header__cart">
@@ -45,6 +47,6 @@ const CartHeader: React.FC = () => {
       </Link>
     </div>
   );
-}
+};
 
 export default CartHeader;
