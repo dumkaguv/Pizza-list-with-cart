@@ -23,54 +23,42 @@ app.get("/", (req, res) => {
 // ==================== API ====================
 app.get("/api/pizzas", async (req, res) => {
   try {
+    let _data = [...data]; // Создаем копию данных
 
     // ======== Фильтрация ========
-    const {
-      categoryId,
-      searchValue,
-      sortId,
-      order,
-      currentPage = 1,
-      limit = 8,
-    } = req.query;
+    const { categoryId, searchValue, sortId, order, currentPage = 1, limit = 8 } = req.query;
 
     if (categoryId) {
-      data = data.filter((item) => item.category === parseInt(categoryId));
+      _data = _data.filter((item) => item.category == categoryId);
     }
 
     // ======== Поиск ========
     if (searchValue) {
       const searchLower = searchValue.toLowerCase();
-      data = data.filter((item) => item.title.toLowerCase().includes(searchLower));
+      _data = _data.filter((item) => item.title.toLowerCase().includes(searchLower));
     }
 
     // ======== Сортировка ========
     if (sortId) {
-      data.sort((a, b) => {
+      _data.sort((a, b) => {
         if (sortId === "prices") {
           const priceA = parseInt(Object.values(a.prices)[0].replace(/\D/g, ""));
           const priceB = parseInt(Object.values(b.prices)[0].replace(/\D/g, ""));
-
           return (priceA - priceB) * (order === "desc" ? -1 : 1);
         }
-
-        if (a[sortId] < b[sortId]) return order === "desc" ? 1 : -1;
-        if (a[sortId] > b[sortId]) return order === "desc" ? -1 : 1;
-        return 0;
+        return (a[sortId] > b[sortId] ? 1 : -1) * (order === "desc" ? -1 : 1);
       });
     }
 
     // ======== Пагинация ========
-    const totalItems = data.length;
+    const totalItems = _data.length;
     const pageNumber = parseInt(currentPage);
     const itemsPerPage = parseInt(limit);
     const startIndex = (pageNumber - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
 
-    const paginatedData = data.slice(startIndex, endIndex);
-
     res.json({
-      items: paginatedData,
+      items: _data.slice(startIndex, endIndex),
       totalItems,
       totalPages: Math.ceil(totalItems / itemsPerPage),
       currentPage: pageNumber,
@@ -85,7 +73,6 @@ app.get("/api/pizzas", async (req, res) => {
 app.get("/api/pizzas/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
     const pizza = data.find((item) => item.id === parseInt(id));
 
     if (!pizza) {

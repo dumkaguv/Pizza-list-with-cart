@@ -4,7 +4,7 @@ import axios from "axios";
 import STATUSES from "@/constants/fetchStatuses";
 
 const BASE_URL =
-  "https://pizza-list-with-cart-api.vercel.app/api/pizzas";
+  "http://localhost:3000/api/pizzas";
 
 export type Pizza = {
   id: number;

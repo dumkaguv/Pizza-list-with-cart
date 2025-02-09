@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run frontend\"",
-    "server": "nodemon server/server.js",
+    "server": "nodemon server/index.js",
     "frontend": "vite",
     "build": "vite build",
     "lint": "eslint .",
