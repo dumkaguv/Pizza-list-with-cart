@@ -4,7 +4,7 @@ import fs from "fs/promises";
 
 const app = express();
 app.use(cors());
-const DATA_FILE = "./public/data/dataPizza.json";
+const DATA_FILE = "public/data/dataPizza.json";
 
 const readData = async () => {
   const data = await fs.readFile(DATA_FILE, "utf-8");
