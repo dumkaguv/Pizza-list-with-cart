@@ -3,7 +3,8 @@ import axios from "axios";
 
 import STATUSES from "@/constants/fetchStatuses";
 
-const BASE_URL = "http://localhost:3000/api/pizzas";
+const BASE_URL =
+  "https://pizza-list-with-cart-lgqr0o86q-dumkaguvs-projects.vercel.app/api/pizzas";
 
 export type Pizza = {
   id: number;
@@ -24,7 +25,7 @@ interface PizzaSliceState {
 
 const initialState: PizzaSliceState = {
   data: [],
-  status: STATUSES.LOADING
+  status: STATUSES.LOADING,
 };
 
 const pizzaSlice = createSlice({

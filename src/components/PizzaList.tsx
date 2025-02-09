@@ -19,7 +19,9 @@ import Pagination from "@/components/Pagination";
 
 import { RootState } from "@/redux/store";
 
-const BASE_URL = "http://localhost:3000/api/pizzas";
+const BASE_URL =
+  "https://pizza-list-with-cart-lgqr0o86q-dumkaguvs-projects.vercel.app/api/pizzas";
+// http://localhost:3000/api/pizzas
 
 type Selector = {
   items: Pizza[];
