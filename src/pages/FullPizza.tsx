@@ -12,7 +12,7 @@ import {
 import PIZZA_TYPES from "@/constants/pizzaTypes";
 import { RootState } from "@/redux/store";
 
-const BASE_URL = "https://pizza-list-with-cart.vercel.app/api/pizzas";
+const BASE_URL = "https://pizza-list-with-cart.vercel-api.app/api/pizzas";
 
 const FullPizza: React.FC = () => {
   const [pizza, setPizza] = useState<{
